@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "ba0918",
   "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
   "bin": {
     "stackgamesempire-gift-list-fetch": "bin/stackgamesempire-gift-list-fetch.js"
   },
