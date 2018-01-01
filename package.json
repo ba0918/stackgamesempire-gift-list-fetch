@@ -1,7 +1,7 @@
 {
   "name": "@ba0918/stackgamesempire-gift-list-fetch",
   "description": "積みゲー帝国のプレゼント応募ページよりゲーム情報一覧を抽出する",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/stackgamesempire-gift-list-fetch.js",
   "author": "ba0918",
   "license": "MIT",
