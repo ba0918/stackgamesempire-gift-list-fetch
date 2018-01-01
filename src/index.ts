@@ -1,8 +1,14 @@
 import * as puppeteer from 'puppeteer'
 import * as fs from 'fs'
 
+type GameLink = {
+  href: string,
+  text: string,
+}
+
 type GameDetail = {
   url: string,
+  name: string,
   category: string | null,
   appid: number | null
 }
@@ -10,7 +16,7 @@ type GameDetail = {
 export function start(url: string, outpath?: string): Promise<void> {
   return fetch(url).then((list) => {
     if (outpath) {
-      fs.writeFileSync(outpath, JSON.stringify(list), 'utf-8')
+      fs.writeFileSync(outpath, JSON.stringify(list), 'utf8')
     }
   })
 }
@@ -20,10 +26,10 @@ async function fetch(url: string): Promise<GameDetail[]> {
   try {
     const page = await browser.newPage()
     await page.goto(url)
-    await page.setViewport({ width: 800, height: 10000 })
+    await page.setViewport({ width: 800, height: 30000 })
     await autoScroll(page)
-    const urls = await extractURL(page)
-    return extractGameDetailsFrom(urls)
+    const links = await extractURL(page)
+    return extractGameDetailsFrom(links)
   } finally {
     await browser.close()
   }
@@ -46,21 +52,27 @@ function autoScroll(page: puppeteer.Page): Promise<any> {
   })
 }
 
-function extractURL(page: puppeteer.Page): Promise<string[]> {
+function extractURL(page: puppeteer.Page): Promise<GameLink[]> {
   return page.evaluate(() =>
     Array.from(document.querySelectorAll('a'))
       .filter(elm => elm.href.match(/^https?:\/\/store\.steampowered\.com\//))
-      .map(elm => elm.href)
+      .map(elm => {
+        return {
+          href: elm.href,
+          text: elm.textContent,
+        }
+      })
   )
 }
 
-function extractGameDetailsFrom(urls: string[]): GameDetail[] {
-  return urls.map(url => {
-    const result = url.match(/https?:\/\/.*\/(\w+)\/(\d+)/)
+function extractGameDetailsFrom(links: GameLink[]): GameDetail[] {
+  return links.map(link => {
+    const result = link.href.match(/https?:\/\/[-\+;:&@=\$,\.\w_]+\/(\w+)\/(\d+)/)
     const category = ((result instanceof Array) && result[1]) ? result[1] : ''
     const appid = ((result instanceof Array) && result[2]) ? parseInt(result[2]) : null
     return {
-      url,
+      url: link.href,
+      name: link.text,
       category: category,
       appid: appid
     }
