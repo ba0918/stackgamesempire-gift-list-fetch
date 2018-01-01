@@ -1,0 +1,9 @@
+# Logs
+Logs
+*.log
+
+# Dependency directory
+node_modules
+
+# Public directory
+lib
