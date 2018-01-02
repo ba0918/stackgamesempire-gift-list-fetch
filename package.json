@@ -1,8 +1,9 @@
 {
   "name": "@ba0918/stackgamesempire-gift-list-fetch",
   "description": "積みゲー帝国のプレゼント応募ページよりゲーム情報一覧を抽出する",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "https://github.com/ba0918/stackgamesempire-gift-list-fetch",
   "author": "ba0918",
   "license": "MIT",
