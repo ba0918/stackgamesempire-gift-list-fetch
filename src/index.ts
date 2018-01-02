@@ -13,7 +13,7 @@ type GameDetail = {
   appid: number | null
 }
 
-export function start(url: string, outpath?: string): Promise<void> {
+export function start(url: string, outpath: string): Promise<void> {
   return fetch(url).then((list) => {
     if (outpath) {
       fs.writeFileSync(outpath, JSON.stringify(list), 'utf8')
@@ -21,7 +21,7 @@ export function start(url: string, outpath?: string): Promise<void> {
   })
 }
 
-async function fetch(url: string): Promise<GameDetail[]> {
+export async function fetch(url: string): Promise<GameDetail[]> {
   const browser = await puppeteer.launch()
   try {
     const page = await browser.newPage()
