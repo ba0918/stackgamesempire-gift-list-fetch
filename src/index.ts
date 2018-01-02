@@ -1,12 +1,12 @@
 import * as puppeteer from 'puppeteer'
 import * as fs from 'fs'
 
-type GameLink = {
+export type GameLink = {
   href: string,
   text: string,
 }
 
-type GameDetail = {
+export type GameDetail = {
   url: string,
   name: string,
   category: string | null,
