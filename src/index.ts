@@ -22,7 +22,7 @@ export function start(url: string, outpath: string): Promise<void> {
 }
 
 export async function fetch(url: string): Promise<GameDetail[]> {
-  const browser = await puppeteer.launch({ headless: false })
+  const browser = await puppeteer.launch()
   try {
     const page = await browser.newPage()
     await page.goto(url)
